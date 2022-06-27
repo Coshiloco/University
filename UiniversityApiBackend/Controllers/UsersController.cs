@@ -11,7 +11,9 @@ using UiniversityApiBackend.Models.DataModels;
 namespace UiniversityApiBackend.Controllers
 {
     // Esta es la ruta de nuestro controlador es decir nuestra ruta la doreccion nuestra url por asi decirlo
-    [Route("api/[controller]")]
+    /*Cuando pone el controler entre esos corchetes va a utilizar el nombre de la clase
+     pero sin la palabra controler es decir Users*/
+    [Route("api/[controller]")] // COntroler for Request to route https://localhost:[puerto en el que se este alojado]/api/users
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -22,7 +24,7 @@ namespace UiniversityApiBackend.Controllers
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: https://localhost:[puerto en el que se este alojado]/api/users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
