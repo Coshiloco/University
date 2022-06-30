@@ -23,12 +23,16 @@ namespace UiniversityApiBackend.Models.DataModels
         este vacio
         con el ? si queremos que ese campo sea 
         opcional*/
-        public string CreatedBy { get; set; } = string.Empty;
+        // Podemos tener un UserID que nos geenre un usuario virtual
+        public User CreatedBy { get; set; } = new User();
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public string UpdatedBy { get; set; } = string.Empty;
+        public User UpdatedBy { get; set; } = new User();
         public DateTime? UpdatedAt { get; set; }
-        public string DeletedBy { get; set; } = string.Empty;
+        public User DeletedBy { get; set; } = new User();
         public DateTime? DeletedAt { get; set; }
         public bool IsDeleted { get; set; } = false;
+        /*Cambiamos a User el createdBy el UpdatedBy y el DeletdBy porque
+         en todas nuestras demas tablas quien puede moficarlo son 
+        los usuarios por eso tenemos esta tabla de usuarios*/
     }
 }

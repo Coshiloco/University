@@ -49,6 +49,15 @@ namespace UiniversityApiBackend.DataAccess
         ese grafico donde se nos muestra
         de manera grafica las tablas y campos 
         que tiene nuestra base de datos*/
-        public DbSet<Curso>? Curse { get; set; }
+        public DbSet<Course>? Courses { get; set; }
+        public DbSet<Category>? Categories { get; set; }
+        /*Importante cuando hacemos una public ICollection<Course> Courses { get; set; } = new List<Course>();
+         en ambos campos de la tabla en el de cursos una lista 
+        apuntando a categorias y en el de categorias una lista apuntando a cursos
+        se nos crea como una tabla intermedia que tiene la id 
+        de un curso y una categoria es decir dos campos uno que es CategoryID y otro que es
+        COurseID que relacionan las dos tablas dado que un curso puede tner N categorias y una Categoria
+        N cursos*/
+
     }
 }
