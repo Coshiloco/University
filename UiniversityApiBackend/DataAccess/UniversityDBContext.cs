@@ -59,5 +59,8 @@ namespace UiniversityApiBackend.DataAccess
         COurseID que relacionan las dos tablas dado que un curso puede tner N categorias y una Categoria
         N cursos*/
 
+        public DbSet<Student>? Students { get; set; }
+        public DbSet<Chapters>? Indexs { get; set; }
+
     }
 }

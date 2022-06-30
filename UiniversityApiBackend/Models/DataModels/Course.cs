@@ -31,6 +31,10 @@ namespace UiniversityApiBackend.Models.DataModels
          con la lista es decir relacionamos la tabla cursos con la tabla categorias*/
         // Aparte de las categorias tendria que relacionarse con estudiantes para saber cuantos estan matriculados con una
         // Collection como ya hemos visto que nos sirve para relacionarlas
+        // Ponemos el indice o Tabla Index para relacionarla con la tabla Index
+        [Required]
+        public Chapters Chapters { get; set; } = new Chapters();
+        [Required]
         public ICollection<Student> Students { get; set; } = new List<Student>();
     }
 }
