@@ -545,7 +545,7 @@ namespace LinqSnippets
 
             var emptyList = new List<int>();
 
-            bool allNumbersAreGreaterThan0 = numbers.All(x => x >= 0) // true output
+            bool allNumbersAreGreaterThan0 = numbers.All(x => x >= 0); // true output
         }
 
         // Aggregate 
