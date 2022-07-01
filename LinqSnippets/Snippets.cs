@@ -552,6 +552,160 @@ namespace LinqSnippets
 
         static public void aggregateQueries()
         {
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+            // Sum all numbers 
+
+            int sum = numbers.Aggregate((prevSum, current) => prevSum + current);
+
+            /*Output
+             0 + 1 => 1,
+             1 + 2 => 3
+             3 + 4 => 7
+             7 + 5 => 12
+             12 + 6 => 18*/
+
+            /*La funcion Aggregate funciona como un acumulador lo que le pasamos a la funcion 
+             es una funcion de callback que tiene dos parametros uno que es la suma previa es decir
+            el primero es 0 y el valor actual es por el que se 
+            recorre la coleccion el cual sera 1 por lo que en la siguiente iteracion 
+            lo que hace es el que el valor prevSum de la funcion callback que se ejecuta dentro del 
+            Aggregate toma el valor de la suma y el valor current sigue recorriendo la coleccion
+            por lo que ahora valdra 2 y asi continuamente es decir es como si tuvieramos una variable 
+            auxiliar haciendonos la suma*/
+
+            string[] words = { "hello,", "my", "name", "is", "Martin" };
+            string greeting = words.Aggregate((prevGreeting, current) => prevGreeting + current);
+
+            /*Output
+             " " + "hello," => hello,
+            "hello," + "my" => hello, my
+            "hello, my" + "name" => hello, my name*/
+
+            /*Esta funcion hace lo mismo que la anetrior opero como estamos operando con mas al hacer el acomulador
+             lo que hace es que te concatena las cadenas de texto o lo que es lo mismo 
+            las sumas*/
+        
+         }
+
+        //Disctinct
+
+        static public void distinctValues()
+        {
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 };
+            IEnumerable<int> values = numbers.Distinct();
+
+            /*Lo que hace la funcion perse es coger y 
+             generarnos una lista qco nlos valores que no estan repetidos en la lista original
+             pero a esta funcion tambien se le puede 
+            meter un callback dentro de los parenteis del DIstint como condicion 
+            que tenga que cumplir */
+        }
+
+        // Group BY
+
+        static public void groupByExamples()
+        {
+            List<int> numbers = new List<int>() { 1,2,3,4,5,6,7,8,9 };
+
+            // Vamos a aobtener dos grupos de nuemros los que cumplen
+            // Cierta condicion y los que no 
+
+            var grouped = numbers.GroupBy(x => x % 2 == 0);
+
+            /* Se supone que tiene que dar dos grupos
+             el priemro es todos aquellos numeros de la coleccion
+            que cumplen con el requisito 
+            y la otra es aquella condicion que no cumple la condicion*/
+
+            /*POr tanto para recorrenos la collecion 
+             tenemos que hacer dos bucles foreach*/
+
+            foreach (var group in grouped) { 
+                foreach (var value in group)
+                {
+                    Console.WriteLine(value);
+                    /*Se supoen que esto nos tendria que imprimir 
+                     primero los valores que no cumplen la condicion
+                     del GroupBy de ser nuemros pares definida esa 
+                    condicion por la funcion flecha o callback que se encuentra 
+                    entre los parentesis
+                    y luego nos devulve los valores que 
+                    cumplen dicha restriccion 
+                    por tanto la secuencia de salida por consola seria 
+                    1,3,5,7,9 ... 2,4,6,8*/
+                }
+            }
+
+            // Tambien podemos hacerlo con objetos
+            
+            var classrom = new[]
+           {
+                new Student
+                {
+                    Id = 1,
+                    Name = "Martin",
+                    Grade = 80,
+                    Certified = true
+                },
+                new Student
+                {
+                    Id = 2,
+                    Name = "Juan",
+                    Grade = 50,
+                    Certified = false
+                },
+                new Student
+                {
+                    Id = 3,
+                    Name = "Ana",
+                    Grade = 96,
+                    Certified = true
+                },
+                new Student
+                {
+                    Id = 4,
+                    Name = "Alvaro",
+                    Grade = 10,
+                    Certified = false
+                },
+                new Student
+                {
+                    Id = 5,
+                    Name = "Pedro",
+                    Grade = 50,
+                    Certified = true
+                }
+
+            };
+
+            // Podmeos hacer un Group bay por la gente que ha aprobado
+
+            var CertifiedQueryStudent = classrom.GroupBy(student => student.Certified == true);
+
+            /*Obtenemos dos resultados en la consulta por el GroupBy
+             
+             1. Los que no estan certificados
+            
+             2. Los que estan certificados*/
+
+            // Para recorrernos la consulta generada por el GroupBy necesitamos el foreach
+
+            foreach (var group in CertifiedQueryStudent)
+            {
+                Console.WriteLine("--------  {0}  ---", group.Key);
+                foreach (var student in group)
+                {
+                    Console.WriteLine(student.Name);
+                }
+            }
+
+            /*Es decir que el GroupBy lo que esta tirando son dos listas 
+             la primera una lista asociada de tipso booleanos 
+            que esta asociada a la condicion que tenemos en el callback 
+            dentro de los parenteis del GroupBY
+            y otra Lista que son los esstudiantes es decir cada objeto estudiante
+            */
 
         }
     }
