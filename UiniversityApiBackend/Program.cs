@@ -1,8 +1,7 @@
 // 1. Usings to work with EntityFramework
 using Microsoft.EntityFrameworkCore;
 using UiniversityApiBackend.DataAccess;
-
-
+using UiniversityApiBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +13,8 @@ var connectionString = builder.Configuration.GetConnectionString(CONNECTIONNAME)
 //3. Add context
 builder.Services.AddDbContext<UniversityDBContext>(options => options.UseSqlServer(connectionString));
 
+
+
 // TODO : Connection with SQL Server Express
 
 
@@ -23,9 +24,35 @@ builder.Services.AddDbContext<UniversityDBContext>(options => options.UseSqlServ
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//4. Add Custom Services(folder Services)
+
+builder.Services.AddScoped<IStudentService, StudentsService>();
+
+// TODO : Add the rest of services
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//5. CORS Configuration
+
+/*El CORS define quienes pueden realizar peticiones a nuestra API,
+ desde que entornos,
+  que tipo de metodos pueden utilizar,
+   y tambien que tipo de cabeceras pueden enviar en las peticiones a nuestra API*/
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
+});
+
+
 
 var app = builder.Build();
 
@@ -41,5 +68,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//6. Tell app yo use CORS
+
+app.UseCors("CorsPolicy");
 
 app.Run();

@@ -708,5 +708,76 @@ namespace LinqSnippets
             */
 
         }
+
+        //Relacion de tablas
+
+        static public void relationsLinq ()
+        {
+            // Hacemis una lista de Posts
+
+            List<Post> posts = new List<Post> ()
+            {
+                new Post()
+                {
+                    Id = 1,
+                    Title = "My first post",
+                    Content = "My first content",
+                    Created = DateTime.Now,
+                    Comments = new List<Comment>()
+                    {
+                        new Comment()
+                        {
+                            Id=1,
+                            Created = DateTime.Now,
+                            Title = "My first comment",
+                            Content = "My content"
+                        },
+                        new Comment()
+                        {
+                            Id=2,
+                            Created = DateTime.Now,
+                            Title = "My second comment",
+                            Content = "My other content"
+                        }
+                    }
+                },
+                new Post()
+                {
+                    Id = 2,
+                    Title = "My second post",
+                    Content = "My second content",
+                    Created = DateTime.Now,
+                    Comments = new List<Comment>()
+                    {
+                        new Comment()
+                        {
+                            Id=3,
+                            Created = DateTime.Now,
+                            Title = "My other comment",
+                            Content = "My new content"
+                        },
+                        new Comment()
+                        {
+                            Id=4,
+                            Created = DateTime.Now,
+                            Title = "My other new comment",
+                            Content = "My new content"
+                        }
+                    }
+                }
+            };
+
+            var COntentofPosts = posts.SelectMany(
+                post => post.Comments, 
+                (post, comment) => new { PostID = post.Id, CommentContent = comment.Content  });
+
+            /* Lo que estamos seleccionando es todos y lo que nos esta
+             sacando es una funcion de callback en el que obtenemos 
+            es un post por orden y luego de ese post rcibimso con la coma 
+            otra funcion en el que tiene dos parametros ese callback que es el post
+            en si y la lista de comments es decir cada comentario y generamos una 
+            nueva lista que sea el ID del Post y el Content que tenga ese post*/
+
+        }
     }
 }
