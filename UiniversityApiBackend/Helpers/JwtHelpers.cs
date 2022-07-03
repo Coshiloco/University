@@ -97,8 +97,6 @@ namespace UiniversityApiBackend.Helpers
                  lo que tendremo sera todo el token
                 cifrado con una cadena de texto hasheada*/
 
-                userToken.Token = model.UserName;
-
                 userToken.UserName = model.UserName;
 
                 userToken.Id = model.Id;
