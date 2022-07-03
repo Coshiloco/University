@@ -98,6 +98,7 @@ namespace UiniversityApiBackend.Controllers
                 {
                     return BadRequest("Wrong Credentials");
                 }
+                return Ok(Token);
             }
             catch (Exception ex)
             {

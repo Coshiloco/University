@@ -9,10 +9,10 @@ namespace UiniversityApiBackend.Models.DataModels
         es decir los campos que va a tener que rellenar*/
         
         [Required]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         [Required]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
     }
 }

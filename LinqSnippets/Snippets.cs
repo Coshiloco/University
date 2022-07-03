@@ -767,9 +767,11 @@ namespace LinqSnippets
                 }
             };
 
+#pragma warning disable CS8603 // Posible tipo de valor devuelto de referencia nulo
             var COntentofPosts = posts.SelectMany(
                 post => post.Comments, 
                 (post, comment) => new { PostID = post.Id, CommentContent = comment.Content  });
+#pragma warning restore CS8603 // Posible tipo de valor devuelto de referencia nulo
 
             /* Lo que estamos seleccionando es todos y lo que nos esta
              sacando es una funcion de callback en el que obtenemos 
