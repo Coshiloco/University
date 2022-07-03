@@ -1,5 +1,6 @@
 // 1. Usings to work with EntityFramework
 using Microsoft.EntityFrameworkCore;
+using UiniversityApiBackend;
 using UiniversityApiBackend.DataAccess;
 using UiniversityApiBackend.Services;
 
@@ -14,7 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString(CONNECTIONNAME)
 builder.Services.AddDbContext<UniversityDBContext>(options => options.UseSqlServer(connectionString));
 
 //7. Add Service of JWT Autorization
-// builder.Services.AddJwtTokenservices(builder.Configuration);
+builder.Services.AddJwtTokenServices(builder.Configuration);
 
 // TODO : Connection with SQL Server Express
 

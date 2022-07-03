@@ -30,6 +30,7 @@ namespace UiniversityApiBackend.Controllers
          le hardcodemos los datos a mano para su posterior implementacion 
         de la forma que se tiene que hacer*/
 
+        // Exmaple USers
         private IEnumerable<User> Logins = new List<User>()
         {
             new User()
