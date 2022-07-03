@@ -13,8 +13,8 @@
         /* EL time Span es para que tu tengas un tiempo
          antes de que el token expire*/
 
-        public string RefreshToken { get; set; } = string.Empty;
-        public string EmailId { get; set; } = string.Empty;
+        public string RefreshToken { get; set; }
+        public string EmailId { get; set; }
         public Guid GuidId { get; set; }
         public DateTime ExpiredTime { get; set; }
     }
