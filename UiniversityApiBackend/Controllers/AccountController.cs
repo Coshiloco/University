@@ -38,6 +38,11 @@ namespace UiniversityApiBackend.Controllers
         de la forma que se tiene que hacer*/
 
         // Exmaple USers
+
+
+        // TODO: Change by real users in DB 
+
+
         private IEnumerable<User> Logins = new List<User>()
         {
             new User()
@@ -59,6 +64,8 @@ namespace UiniversityApiBackend.Controllers
 
         /*Vamos a hacer una peticion de tipo post con los datos de la fucnion de arriba
          que nos simula la funcion de arriba */
+        
+        // TODO: Change by real users in DB 
         [HttpPost]
         public IActionResult GetToken(UserLogins userLogin)
         {
@@ -72,7 +79,19 @@ namespace UiniversityApiBackend.Controllers
 
                 // Tendriamos que buscar el Usuario como hace nuestro controler de Users
 
-                var Valid = Logins.Any(user => user.UserName.Equals(userLogin.UserName, StringComparison.OrdinalIgnoreCase));
+                //TODO: Search a user in context with LINQ
+
+                var searchUSer = (from user in _context.Users
+                                 where user.UserName == userLogin.UserName && user.Password == userLogin.Password
+                                 select user).FirstOrDefault();
+
+                /*Cuando lo metemos entre parentesis 
+                 lo que podemos hacer es hacer una consulta de Linq
+                */
+
+                // Podemos imprimirlo por consola el usuario para comprobarlo 
+
+                //var Valid = Logins.Any(user => user.UserName.Equals(userLogin.UserName, StringComparison.OrdinalIgnoreCase));
 
                 /*StringComparison.OrdinalIgnoreCase esta funcion lo que hace es que en la compracion
                  no haga distincion entre mayusculas y minusculas*/
@@ -80,7 +99,9 @@ namespace UiniversityApiBackend.Controllers
                 // La condcion de comprobacion es verdadera a partir 
                 // De esa de condicion generamos el JWT Token
 
-                if (Valid)
+                // Ahora tenemos que generar el token con el usuario econtrado que se ha registrado sin ser el caso de prueba
+
+                if (searchUSer != null)
                 {
                     /*Aqui lo que estamos haciendo es decir una vez es valido es decir
                      una vez el usuario que me has pasado por esta funcion 
@@ -88,18 +109,19 @@ namespace UiniversityApiBackend.Controllers
                     encontrar la primera ocurrencia del mismo para sacar sus datos y asi 
                     poder generar su JWT Token en la funcino de arriba de Logins porque 
                     es de prueba*/
-                    var user = Logins.FirstOrDefault(user => user.UserName.Equals(userLogin.UserName, StringComparison.OrdinalIgnoreCase));
-
+                    
                     /*Aqui ahora una vez encontrado el usario registrado 
                      tenemos que generar el Token con el HElper de la clase JwtHelper que nos creamos 
                     para modularizar y agilar el proceso y a esta le pasamos un objeto USertoken 
                     creada en nuestra carpeta DataModels*/
 
+                    //Genracion con la base de datos real
+
                     Token = JwtHelpers.GenTokenKey(new UserTokens()
                     {
-                        UserName = user.UserName,
-                        EmailId = user.Email,
-                        Id = user.Id,
+                        UserName = searchUSer.UserName,
+                        EmailId = searchUSer.Email,
+                        Id = searchUSer.Id,
                         GuidId = Guid.NewGuid(),
 
                     }, _jwtSettings);
