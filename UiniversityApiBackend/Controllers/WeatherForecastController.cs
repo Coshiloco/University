@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UiniversityApiBackend.Controllers
@@ -21,9 +23,17 @@ namespace UiniversityApiBackend.Controllers
 
         //MEthod HTTTP de tipo get
         [HttpGet(Name = "GetWeatherForecast")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator, User")]
+
+        // Una vez configurado el Swagger es decir la documentacion con la autorizacion podemos proteger 
+        
+        // Las rutas que queramos como por ejemplo esta
+
+
         /*Cuando llamamos al GetWeatherForecast 
          lo que hacemos es que se ejecute esta funcion que 
         devuelve un enumerable*/
+        
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
