@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UiniversityApiBackend.DataAccess;
 using UiniversityApiBackend.Helpers;
 using UiniversityApiBackend.Models.DataModels;
 
@@ -14,6 +15,11 @@ namespace UiniversityApiBackend.Controllers
         /*COmo siempre en los controles tenemos que generar una variable de tipo 
          readondly que nos va a guardar los jwtSettings*/
 
+        // Necesitaremos tambien acceso al contexto de la universidad en geenral para tenr todas acceso
+        // A todas las tabals en las que hayamos metido dentro de este context con un DBSet
+
+        private readonly UniversityDBContext _context;
+
         private readonly JwtSettings _jwtSettings;
 
         /*El constructor que nos va ainicialziar las settings es decir 
@@ -21,8 +27,9 @@ namespace UiniversityApiBackend.Controllers
         en la variable readonly y
         asi podamos utilziarlo a lo largo de toda la clase*/
 
-        public AccountController(JwtSettings jwtSettings)
+        public AccountController(UniversityDBContext context, JwtSettings jwtSettings)
         {
+            _context = context;
             _jwtSettings = jwtSettings;
         }
 
@@ -62,6 +69,8 @@ namespace UiniversityApiBackend.Controllers
                 por tanto en la fuuncion de callback tenemos que ver que el usario que le estamos 
                 recorriendo es igual al usuario que le estamos pasando en la fucnino es decir 
                 si relamente se ha registraod*/
+
+                // Tendriamos que buscar el Usuario como hace nuestro controler de Users
 
                 var Valid = Logins.Any(user => user.UserName.Equals(userLogin.UserName, StringComparison.OrdinalIgnoreCase));
 
